@@ -1,0 +1,1175 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电视催眠疗愈</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        secondary: '#8382FF',
+                        'dark-bg': '#181818',
+                        'dark-card': '#292929',
+                        'light-card': '#FFFFFF',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-in-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .tv-screen {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(93, 92, 222, 0.3);
+            transition: all 0.5s ease;
+        }
+        
+        .tv-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, rgba(93, 92, 222, 0.8), transparent);
+            animation: scanline 3s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+        
+        .memory-card, .future-card {
+            transition: all 0.3s ease;
+        }
+        
+        .memory-card:hover, .future-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(93, 92, 222, 0.2);
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .dark .progress-path {
+            stroke: #3a3a3a;
+        }
+        
+        .progress-path {
+            stroke: #e6e6e6;
+        }
+        
+        .btn-primary {
+            @apply bg-primary hover:bg-secondary text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-300 shadow-md hover:shadow-lg;
+        }
+        
+        .btn-outline {
+            @apply border border-primary text-primary hover:bg-primary hover:text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-300;
+        }
+        
+        .page-transition {
+            transition: all 0.5s ease;
+        }
+        
+        .tab-active {
+            @apply text-primary border-primary;
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .dark .tv-glow {
+            box-shadow: 0 0 30px rgba(93, 92, 222, 0.4);
+        }
+        
+        .tv-glow {
+            box-shadow: 0 0 20px rgba(93, 92, 222, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 text-gray-800 dark:bg-dark-bg dark:text-gray-200 transition-colors duration-300">
+    <!-- App Container -->
+    <div id="app" class="max-w-md mx-auto pb-20">
+        <!-- Welcome Page -->
+        <div id="welcome-page" class="page min-h-screen flex flex-col justify-center items-center px-6 py-12 animate-fade-in">
+            <div class="tv-screen w-48 h-48 mb-8 tv-glow bg-white dark:bg-dark-card flex items-center justify-center">
+                <i class="ri-mental-health-fill text-7xl text-primary"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-center mb-4">电视催眠疗愈</h1>
+            <p class="text-center text-gray-600 dark:text-gray-400 mb-8">通过回忆过去和预演未来，提升情绪稳定和自信</p>
+            <button class="btn-primary w-full mb-4" onclick="showPage('home-page')">立即体验</button>
+            <div class="flex w-full gap-3">
+                <button class="btn-outline flex-1" onclick="showLoginForm()">登录</button>
+                <button class="btn-outline flex-1" onclick="showRegisterForm()">注册</button>
+            </div>
+            
+            <!-- Login Form (Hidden by default) -->
+            <div id="login-form" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-dark-card rounded-lg p-6 w-11/12 max-w-md animate-slide-in">
+                    <h2 class="text-xl font-bold mb-4">登录账号</h2>
+                    <input type="email" placeholder="邮箱地址" class="w-full p-3 mb-3 border rounded-lg text-base dark:bg-gray-800 dark:border-gray-700">
+                    <input type="password" placeholder="密码" class="w-full p-3 mb-4 border rounded-lg text-base dark:bg-gray-800 dark:border-gray-700">
+                    <button class="btn-primary w-full mb-3" onclick="hideLoginForm()">登录</button>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">还没有账号？</span>
+                        <button class="text-sm text-primary" onclick="hideLoginForm(); showRegisterForm()">立即注册</button>
+                    </div>
+                    <div class="flex gap-3 justify-center">
+                        <button class="p-2 rounded-full border border-gray-300 dark:border-gray-700">
+                            <i class="ri-wechat-fill text-xl text-green-500"></i>
+                        </button>
+                        <button class="p-2 rounded-full border border-gray-300 dark:border-gray-700">
+                            <i class="ri-qq-fill text-xl text-blue-500"></i>
+                        </button>
+                        <button class="p-2 rounded-full border border-gray-300 dark:border-gray-700">
+                            <i class="ri-weibo-fill text-xl text-red-500"></i>
+                        </button>
+                    </div>
+                    <button onclick="hideLoginForm()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="ri-close-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Register Form (Hidden by default) -->
+            <div id="register-form" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white dark:bg-dark-card rounded-lg p-6 w-11/12 max-w-md animate-slide-in">
+                    <h2 class="text-xl font-bold mb-4">注册账号</h2>
+                    <input type="text" placeholder="用户名" class="w-full p-3 mb-3 border rounded-lg text-base dark:bg-gray-800 dark:border-gray-700">
+                    <input type="email" placeholder="邮箱地址" class="w-full p-3 mb-3 border rounded-lg text-base dark:bg-gray-800 dark:border-gray-700">
+                    <input type="password" placeholder="密码" class="w-full p-3 mb-4 border rounded-lg text-base dark:bg-gray-800 dark:border-gray-700">
+                    <button class="btn-primary w-full mb-3" onclick="hideRegisterForm()">注册</button>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">已有账号？</span>
+                        <button class="text-sm text-primary" onclick="hideRegisterForm(); showLoginForm()">去登录</button>
+                    </div>
+                    <div class="flex gap-3 justify-center">
+                        <button class="p-2 rounded-full border border-gray-300 dark:border-gray-700">
+                            <i class="ri-wechat-fill text-xl text-green-500"></i>
+                        </button>
+                        <button class="p-2 rounded-full border border-gray-300 dark:border-gray-700">
+                            <i class="ri-qq-fill text-xl text-blue-500"></i>
+                        </button>
+                        <button class="p-2 rounded-full border border-gray-300 dark:border-gray-700">
+                            <i class="ri-weibo-fill text-xl text-red-500"></i>
+                        </button>
+                    </div>
+                    <button onclick="hideRegisterForm()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        <i class="ri-close-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Page -->
+        <div id="home-page" class="page pt-6 px-4 hidden">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold">你好，用户</h1>
+                    <p class="text-gray-600 dark:text-gray-400">让我们开始今天的疗愈之旅</p>
+                </div>
+                <button class="p-2 rounded-full bg-gray-100 dark:bg-gray-800" id="theme-toggle">
+                    <i class="ri-moon-fill dark:hidden text-gray-600"></i>
+                    <i class="ri-sun-fill hidden dark:block text-yellow-400"></i>
+                </button>
+            </div>
+            
+            <!-- Today's Task -->
+            <div class="tv-screen mb-6 p-5 bg-white dark:bg-dark-card rounded-lg">
+                <h2 class="text-lg font-medium mb-3">今日任务</h2>
+                <div class="bg-primary/10 p-4 rounded-lg mb-3">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-primary">回忆温馨的过去</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">选择一个美好记忆，重新体验积极情绪</p>
+                        </div>
+                        <span class="text-sm bg-primary/20 text-primary px-2 py-1 rounded-full">每日</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <svg width="32" height="32" class="progress-ring">
+                                <circle class="progress-path" stroke-width="3" fill="transparent" r="12" cx="16" cy="16"></circle>
+                                <circle stroke="#5D5CDE" stroke-width="3" fill="transparent" r="12" cx="16" cy="16" stroke-dasharray="75.4" stroke-dashoffset="50"></circle>
+                            </svg>
+                            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">33% 已完成</span>
+                        </div>
+                        <button class="btn-primary py-1.5 px-4 text-sm" onclick="showPage('memory-page')">开始</button>
+                    </div>
+                </div>
+                <div class="bg-secondary/10 p-4 rounded-lg">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-medium text-secondary">设定未来愿景</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">想象并可视化一个重要的未来目标</p>
+                        </div>
+                        <span class="text-sm bg-secondary/20 text-secondary px-2 py-1 rounded-full">新任务</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <div class="flex items-center">
+                            <svg width="32" height="32" class="progress-ring">
+                                <circle class="progress-path" stroke-width="3" fill="transparent" r="12" cx="16" cy="16"></circle>
+                                <circle stroke="#8382FF" stroke-width="3" fill="transparent" r="12" cx="16" cy="16" stroke-dasharray="75.4" stroke-dashoffset="75.4"></circle>
+                            </svg>
+                            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">0% 已完成</span>
+                        </div>
+                        <button class="btn-outline py-1.5 px-4 text-sm border-secondary text-secondary hover:bg-secondary" onclick="showPage('future-page')">开始</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Access -->
+            <h2 class="text-lg font-medium mb-3">快速访问</h2>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="p-4 bg-white dark:bg-dark-card rounded-lg flex flex-col items-center text-center cursor-pointer" onclick="showPage('memory-page')">
+                    <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-2">
+                        <i class="ri-brain-fill text-xl text-primary"></i>
+                    </div>
+                    <h3 class="font-medium">回忆练习</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">重温美好记忆</p>
+                </div>
+                <div class="p-4 bg-white dark:bg-dark-card rounded-lg flex flex-col items-center text-center cursor-pointer" onclick="showPage('future-page')">
+                    <div class="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mb-2">
+                        <i class="ri-video-line text-xl text-secondary"></i>
+                    </div>
+                    <h3 class="font-medium">未来预演</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">可视化未来目标</p>
+                </div>
+                <div class="p-4 bg-white dark:bg-dark-card rounded-lg flex flex-col items-center text-center cursor-pointer" onclick="showPage('challenge-page')">
+                    <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-2">
+                        <i class="ri-medal-line text-xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-medium">疗愈挑战</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">每日情绪任务</p>
+                </div>
+                <div class="p-4 bg-white dark:bg-dark-card rounded-lg flex flex-col items-center text-center cursor-pointer" onclick="showPage('social-page')">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                        <i class="ri-group-line text-xl text-blue-600"></i>
+                    </div>
+                    <h3 class="font-medium">社交互动</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">分享与互动</p>
+                </div>
+            </div>
+            
+            <!-- Recent Sessions -->
+            <h2 class="text-lg font-medium mb-3">最近疗愈</h2>
+            <div class="space-y-3 mb-6">
+                <div class="p-3 bg-white dark:bg-dark-card rounded-lg flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                        <i class="ri-brain-fill text-primary"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium">童年记忆</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">昨天，10:30</p>
+                    </div>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full dark:bg-green-900 dark:text-green-200">+15 积分</span>
+                </div>
+                <div class="p-3 bg-white dark:bg-dark-card rounded-lg flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-secondary/20 flex items-center justify-center mr-3">
+                        <i class="ri-video-line text-secondary"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium">未来职业愿景</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">前天，16:45</p>
+                    </div>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full dark:bg-green-900 dark:text-green-200">+20 积分</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory Recall Page -->
+        <div id="memory-page" class="page px-4 pt-6 hidden">
+            <div class="flex items-center mb-6">
+                <button class="mr-3" onclick="showPage('home-page')">
+                    <i class="ri-arrow-left-line text-xl"></i>
+                </button>
+                <h1 class="text-xl font-bold">回忆练习</h1>
+            </div>
+            
+            <!-- Memory Theme Selection -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium mb-3">选择回忆主题</h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="memory-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startMemorySession('childhood')">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-3 dark:bg-purple-900">
+                            <i class="ri-bear-smile-line text-purple-600 dark:text-purple-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">童年记忆</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">回忆童年的快乐时光</p>
+                    </div>
+                    <div class="memory-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startMemorySession('achievement')">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-3 dark:bg-blue-900">
+                            <i class="ri-trophy-line text-blue-600 dark:text-blue-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">职场成就</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">回顾工作中的成功时刻</p>
+                    </div>
+                    <div class="memory-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startMemorySession('family')">
+                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-3 dark:bg-red-900">
+                            <i class="ri-heart-3-line text-red-600 dark:text-red-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">亲情温暖</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">回忆与家人的温馨时刻</p>
+                    </div>
+                    <div class="memory-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startMemorySession('travel')">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-3 dark:bg-green-900">
+                            <i class="ri-plane-line text-green-600 dark:text-green-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">旅行回忆</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">重温旅途中的美好风景</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Memories -->
+            <div>
+                <h2 class="text-lg font-medium mb-3">最近回忆</h2>
+                <div class="space-y-3">
+                    <div class="p-3 bg-white dark:bg-dark-card rounded-lg flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mr-3">
+                            <i class="ri-bear-smile-line text-purple-600 dark:text-purple-300"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">童年记忆：第一次骑自行车</h3>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">3天前</p>
+                        </div>
+                        <button class="text-primary">
+                            <i class="ri-play-circle-line text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="p-3 bg-white dark:bg-dark-card rounded-lg flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3">
+                            <i class="ri-trophy-line text-blue-600 dark:text-blue-300"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">职场成就：完成重要项目</h3>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">1周前</p>
+                        </div>
+                        <button class="text-primary">
+                            <i class="ri-play-circle-line text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Memory Session (Hidden by default) -->
+            <div id="memory-session" class="fixed inset-0 bg-white dark:bg-dark-bg z-50 flex flex-col hidden">
+                <div class="p-4 flex items-center">
+                    <button class="mr-3" onclick="closeMemorySession()">
+                        <i class="ri-arrow-left-line text-xl"></i>
+                    </button>
+                    <h2 class="text-xl font-bold" id="memory-title">回忆练习</h2>
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center px-6">
+                    <div class="tv-screen tv-glow w-full aspect-video max-w-md mb-8 bg-gradient-to-r from-primary/20 to-secondary/20 flex items-center justify-center relative">
+                        <div id="memory-image" class="absolute inset-0 bg-cover bg-center opacity-70"></div>
+                        <div class="z-10 text-center p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white drop-shadow-lg" id="memory-prompt">回忆你童年的一个美好时刻</h3>
+                            <p class="text-white text-sm drop-shadow-lg">闭上眼睛，让自己沉浸在这段回忆中...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full max-w-md">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="text-sm">
+                                <span id="current-time">00:00</span> / <span id="total-time">05:00</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <button id="btn-volume" class="text-gray-600 dark:text-gray-400">
+                                    <i class="ri-volume-up-fill text-xl"></i>
+                                </button>
+                                <button id="btn-play-pause" class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white">
+                                    <i class="ri-pause-fill text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-8">
+                            <div id="progress-bar" class="h-full bg-primary" style="width: 35%"></div>
+                        </div>
+                        
+                        <p class="text-gray-700 dark:text-gray-300 text-center mb-6" id="guidance-text">
+                            回想那个时刻的情景，感受当时的温暖和快乐...让自己完全沉浸在这段记忆中...
+                        </p>
+                        
+                        <button class="btn-primary w-full" onclick="completeMemorySession()">
+                            完成回忆
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Future Visualization Page -->
+        <div id="future-page" class="page px-4 pt-6 hidden">
+            <div class="flex items-center mb-6">
+                <button class="mr-3" onclick="showPage('home-page')">
+                    <i class="ri-arrow-left-line text-xl"></i>
+                </button>
+                <h1 class="text-xl font-bold">未来预演</h1>
+            </div>
+            
+            <!-- Goal Setting -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium mb-3">设定目标</h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="future-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startFutureSession('career')">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-3 dark:bg-blue-900">
+                            <i class="ri-briefcase-4-line text-blue-600 dark:text-blue-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">职业晋升</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">想象职场成功的场景</p>
+                    </div>
+                    <div class="future-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startFutureSession('health')">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-3 dark:bg-green-900">
+                            <i class="ri-heart-pulse-line text-green-600 dark:text-green-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">健康目标</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">可视化健康生活方式</p>
+                    </div>
+                    <div class="future-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startFutureSession('relationship')">
+                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-3 dark:bg-red-900">
+                            <i class="ri-user-heart-line text-red-600 dark:text-red-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">人际关系</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">预演和谐的人际互动</p>
+                    </div>
+                    <div class="future-card bg-white dark:bg-dark-card p-4 rounded-lg cursor-pointer" onclick="startFutureSession('personal')">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-3 dark:bg-purple-900">
+                            <i class="ri-user-star-line text-purple-600 dark:text-purple-300 text-xl"></i>
+                        </div>
+                        <h3 class="font-medium mb-1">个人成长</h3>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">可视化自我提升</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Custom Goal -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium mb-3">自定义目标</h2>
+                <div class="bg-white dark:bg-dark-card p-4 rounded-lg">
+                    <input type="text" placeholder="输入你的目标（如：成功演讲、考试通过）" class="w-full p-3 mb-3 border rounded-lg text-base dark:bg-gray-800 dark:border-gray-700">
+                    <button class="btn-primary w-full" onclick="startFutureSession('custom')">
+                        开始预演
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Recent Visualizations -->
+            <div>
+                <h2 class="text-lg font-medium mb-3">最近预演</h2>
+                <div class="space-y-3">
+                    <div class="p-3 bg-white dark:bg-dark-card rounded-lg flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3">
+                            <i class="ri-briefcase-4-line text-blue-600 dark:text-blue-300"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">成功晋升为部门经理</h3>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">2天前</p>
+                        </div>
+                        <button class="text-primary">
+                            <i class="ri-play-circle-line text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="p-3 bg-white dark:bg-dark-card rounded-lg flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3">
+                            <i class="ri-heart-pulse-line text-green-600 dark:text-green-300"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">达到理想体重</h3>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">5天前</p>
+                        </div>
+                        <button class="text-primary">
+                            <i class="ri-play-circle-line text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Future Session (Hidden by default) -->
+            <div id="future-session" class="fixed inset-0 bg-white dark:bg-dark-bg z-50 flex flex-col hidden">
+                <div class="p-4 flex items-center">
+                    <button class="mr-3" onclick="closeFutureSession()">
+                        <i class="ri-arrow-left-line text-xl"></i>
+                    </button>
+                    <h2 class="text-xl font-bold" id="future-title">未来预演</h2>
+                </div>
+                <div class="flex-1 flex flex-col items-center justify-center px-6">
+                    <div class="tv-screen tv-glow w-full aspect-video max-w-md mb-8 bg-gradient-to-r from-blue-500/20 to-purple-500/20 flex items-center justify-center relative">
+                        <div id="future-image" class="absolute inset-0 bg-cover bg-center opacity-70"></div>
+                        <div class="z-10 text-center p-6">
+                            <h3 class="text-xl font-bold mb-2 text-white drop-shadow-lg" id="future-prompt">想象你成功达成目标的场景</h3>
+                            <p class="text-white text-sm drop-shadow-lg">闭上眼睛，让自己沉浸在这个未来场景中...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full max-w-md">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="text-sm">
+                                <span id="future-current-time">00:00</span> / <span id="future-total-time">05:00</span>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <button id="future-btn-volume" class="text-gray-600 dark:text-gray-400">
+                                    <i class="ri-volume-up-fill text-xl"></i>
+                                </button>
+                                <button id="future-btn-play-pause" class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white">
+                                    <i class="ri-pause-fill text-2xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-8">
+                            <div id="future-progress-bar" class="h-full bg-primary" style="width: 20%"></div>
+                        </div>
+                        
+                        <p class="text-gray-700 dark:text-gray-300 text-center mb-6" id="future-guidance-text">
+                            想象你已经成功实现了目标，感受那种成就感和自信...体验那种积极的情绪...
+                        </p>
+                        
+                        <div class="flex gap-3">
+                            <button class="btn-outline flex-1" onclick="shareFutureVision()">
+                                <i class="ri-share-line mr-1"></i> 分享
+                            </button>
+                            <button class="btn-primary flex-1" onclick="completeFutureSession()">
+                                完成预演
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Healing Challenge Page -->
+        <div id="challenge-page" class="page px-4 pt-6 hidden">
+            <div class="flex items-center mb-6">
+                <button class="mr-3" onclick="showPage('home-page')">
+                    <i class="ri-arrow-left-line text-xl"></i>
+                </button>
+                <h1 class="text-xl font-bold">疗愈挑战</h1>
+            </div>
+            
+            <!-- Progress Overview -->
+            <div class="bg-white dark:bg-dark-card rounded-lg p-4 mb-6">
+                <h2 class="text-lg font-medium mb-3">疗愈进度</h2>
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">本周已完成</p>
+                        <div class="flex items-baseline">
+                            <span class="text-2xl font-bold">4</span>
+                            <span class="text-gray-600 dark:text-gray-400 text-sm ml-1">/ 7 天</span>
+                        </div>
+                    </div>
+                    <div class="relative w-20 h-20">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <circle class="progress-path" cx="50" cy="50" r="40" stroke-width="10" fill="none"></circle>
+                            <circle cx="50" cy="50" r="40" stroke="#5D5CDE" stroke-width="10" fill="none" stroke-dasharray="251.2" stroke-dashoffset="125.6" stroke-linecap="round"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-lg font-bold">57%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600 dark:text-gray-400 text-sm">总积分</span>
+                    <span class="text-sm font-medium">240 积分</span>
+                </div>
+                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary" style="width: 60%"></div>
+                </div>
+            </div>
+            
+            <!-- Healing Puzzle -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-lg font-medium">情绪拼图</h2>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">6/12 已解锁</span>
+                </div>
+                <div class="bg-white dark:bg-dark-card rounded-lg p-4">
+                    <div class="grid grid-cols-4 gap-2 mb-3">
+                        <div class="aspect-square bg-primary/20 rounded-lg flex items-center justify-center">
+                            <i class="ri-emotion-happy-line text-primary text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-primary/20 rounded-lg flex items-center justify-center">
+                            <i class="ri-heart-fill text-primary text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-primary/10 rounded-lg flex items-center justify-center">
+                            <i class="ri-sun-fill text-primary text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-primary/10 rounded-lg flex items-center justify-center">
+                            <i class="ri-plant-fill text-primary text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-primary/10 rounded-lg flex items-center justify-center">
+                            <i class="ri-rainbow-fill text-primary text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-primary/10 rounded-lg flex items-center justify-center">
+                            <i class="ri-flower-fill text-primary text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="ri-lock-line text-gray-400 dark:text-gray-500 text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="ri-lock-line text-gray-400 dark:text-gray-500 text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="ri-lock-line text-gray-400 dark:text-gray-500 text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="ri-lock-line text-gray-400 dark:text-gray-500 text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="ri-lock-line text-gray-400 dark:text-gray-500 text-xl"></i>
+                        </div>
+                        <div class="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                            <i class="ri-lock-line text-gray-400 dark:text-gray-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 text-center">完成拼图后可以解锁额外的疗愈内容</p>
+                </div>
+            </div>
+            
+            <!-- Upcoming Challenges -->
+            <div>
+                <h2 class="text-lg font-medium mb-3">即将开始的挑战</h2>
+                <div class="space-y-3">
+                    <div class="p-4 bg-white dark:bg-dark-card rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium">7天感恩挑战</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">3天后开始</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">每天回忆一个让你感恩的时刻，提升积极情绪</p>
+                        <button class="btn-outline w-full">预约参与</button>
+                    </div>
+                    <div class="p-4 bg-white dark:bg-dark-card rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-medium">21天情绪管理</h3>
+                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full dark:bg-blue-900 dark:text-blue-200">1周后开始</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">掌握情绪管理技巧，提高情绪稳定性</p>
+                        <button class="btn-outline w-full">预约参与</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Page -->
+        <div id="social-page" class="page px-4 pt-6 hidden">
+            <div class="flex items-center mb-6">
+                <button class="mr-3" onclick="showPage('home-page')">
+                    <i class="ri-arrow-left-line text-xl"></i>
+                </button>
+                <h1 class="text-xl font-bold">社交互动</h1>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="flex border-b dark:border-gray-700 mb-4">
+                <button class="tab-btn tab-active flex-1 py-2 px-4 text-center border-b-2" onclick="switchTab(this, 'feed-section')">动态</button>
+                <button class="tab-btn flex-1 py-2 px-4 text-center border-b-2 border-transparent text-gray-600 dark:text-gray-400" onclick="switchTab(this, 'groups-section')">疗愈圈</button>
+            </div>
+            
+            <!-- Feed Section -->
+            <div id="feed-section" class="tab-section">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-medium">朋友动态</h2>
+                    <button class="bg-primary/10 text-primary p-2 rounded-full">
+                        <i class="ri-add-line"></i>
+                    </button>
+                </div>
+                
+                <!-- Social Posts -->
+                <div class="space-y-4">
+                    <!-- Post 1 -->
+                    <div class="bg-white dark:bg-dark-card rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                                <span class="text-blue-600 font-medium">L</span>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">李明</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">2小时前</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <p class="text-gray-800 dark:text-gray-200">感谢过去的自己一直坚持锻炼，现在终于能轻松跑完10公里了！ #感恩过去 #健康生活</p>
+                        </div>
+                        <div class="tv-screen aspect-video bg-gray-100 dark:bg-gray-800 mb-3"></div>
+                        <div class="flex justify-between">
+                            <button class="flex items-center text-gray-600 dark:text-gray-400">
+                                <i class="ri-heart-line mr-1"></i>
+                                <span>24</span>
+                            </button>
+                            <button class="flex items-center text-gray-600 dark:text-gray-400">
+                                <i class="ri-message-2-line mr-1"></i>
+                                <span>6</span>
+                            </button>
+                            <button class="flex items-center text-gray-600 dark:text-gray-400">
+                                <i class="ri-share-forward-line mr-1"></i>
+                                <span>分享</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 2 -->
+                    <div class="bg-white dark:bg-dark-card rounded-lg p-4">
+                        <div class="flex items-center mb-3">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+                                <span class="text-green-600 font-medium">Z</span>
+                            </div>
+                            <div>
+                                <h3 class="font-medium">张华</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-400">昨天</p>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <p class="text-gray-800 dark:text-gray-200">可视化了自己未来开个人画展的场景，仿佛已经实现了一样！每天都在为这个目标努力创作。 #未来愿景 #艺术创作</p>
+                        </div>
+                        <div class="tv-screen aspect-video bg-gray-100 dark:bg-gray-800 mb-3"></div>
+                        <div class="flex justify-between">
+                            <button class="flex items-center text-gray-600 dark:text-gray-400">
+                                <i class="ri-heart-line mr-1"></i>
+                                <span>36</span>
+                            </button>
+                            <button class="flex items-center text-gray-600 dark:text-gray-400">
+                                <i class="ri-message-2-line mr-1"></i>
+                                <span>12</span>
+                            </button>
+                            <button class="flex items-center text-gray-600 dark:text-gray-400">
+                                <i class="ri-share-forward-line mr-1"></i>
+                                <span>分享</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Groups Section -->
+            <div id="groups-section" class="tab-section hidden">
+                <div class="mb-4">
+                    <h2 class="text-lg font-medium mb-3">热门疗愈圈</h2>
+                    
+                    <!-- Group List -->
+                    <div class="space-y-3">
+                        <div class="bg-white dark:bg-dark-card rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex">
+                                    <div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mr-3">
+                                        <i class="ri-mental-health-fill text-purple-600 dark:text-purple-300"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium">情绪平衡小组</h3>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">2,458人已加入</p>
+                                    </div>
+                                </div>
+                                <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+                                    加入
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">一起学习情绪管理技巧，分享心得体会</p>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-dark-card rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex">
+                                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mr-3">
+                                        <i class="ri-focus-3-line text-blue-600 dark:text-blue-300"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium">职场自信提升</h3>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">1,876人已加入</p>
+                                    </div>
+                                </div>
+                                <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+                                    加入
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">职场压力疗愈，增强自信与沟通能力</p>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-dark-card rounded-lg p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="flex">
+                                    <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-3">
+                                        <i class="ri-plant-fill text-green-600 dark:text-green-300"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-medium">每日感恩练习</h3>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">3,245人已加入</p>
+                                    </div>
+                                </div>
+                                <button class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+                                    加入
+                                </button>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">每天分享一件让你感恩的事，培养积极心态</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 class="text-lg font-medium mb-3">已加入的疗愈圈</h2>
+                    <div class="bg-white dark:bg-dark-card rounded-lg p-4 text-center">
+                        <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-3">
+                            <i class="ri-group-line text-gray-400 text-2xl"></i>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-3">你还没有加入任何疗愈圈</p>
+                        <button class="btn-outline w-full">探索更多疗愈圈</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-dark-card border-t dark:border-gray-800 px-2 py-3 z-40">
+            <div class="flex justify-around items-center">
+                <button class="flex flex-col items-center py-1 nav-btn nav-active" onclick="showPage('home-page')">
+                    <i class="ri-home-5-fill text-xl"></i>
+                    <span class="text-xs mt-1">首页</span>
+                </button>
+                <button class="flex flex-col items-center py-1 nav-btn" onclick="showPage('memory-page')">
+                    <i class="ri-brain-line text-xl"></i>
+                    <span class="text-xs mt-1">回忆</span>
+                </button>
+                <button class="flex flex-col items-center py-1 nav-btn" onclick="showPage('future-page')">
+                    <i class="ri-movie-line text-xl"></i>
+                    <span class="text-xs mt-1">预演</span>
+                </button>
+                <button class="flex flex-col items-center py-1 nav-btn" onclick="showPage('social-page')">
+                    <i class="ri-group-line text-xl"></i>
+                    <span class="text-xs mt-1">社区</span>
+                </button>
+                <button class="flex flex-col items-center py-1 nav-btn" onclick="showPage('profile-page')">
+                    <i class="ri-user-line text-xl"></i>
+                    <span class="text-xs mt-1">我的</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle dark mode
+        const darkModeToggle = document.getElementById('theme-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+        
+        // Check system preference for dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+        
+        // Page navigation
+        const pages = document.querySelectorAll('.page');
+        const navButtons = document.querySelectorAll('.nav-btn');
+        
+        function showPage(pageId) {
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.scrollTop = 0;
+            }
+            
+            // Update bottom navigation
+            if (pageId === 'welcome-page') return;
+            
+            navButtons.forEach(btn => {
+                btn.classList.remove('nav-active');
+                btn.classList.add('text-gray-500', 'dark:text-gray-400');
+            });
+            
+            let navIndex = {
+                'home-page': 0,
+                'memory-page': 1,
+                'future-page': 2,
+                'social-page': 3,
+                'profile-page': 4,
+                'challenge-page': 1  // Treat challenge as memory for nav highlighting
+            }[pageId] || 0;
+            
+            if (navButtons[navIndex]) {
+                navButtons[navIndex].classList.add('nav-active');
+                navButtons[navIndex].classList.remove('text-gray-500', 'dark:text-gray-400');
+            }
+        }
+        
+        // Login/Register Forms
+        function showLoginForm() {
+            document.getElementById('login-form').classList.remove('hidden');
+        }
+        
+        function hideLoginForm() {
+            document.getElementById('login-form').classList.add('hidden');
+        }
+        
+        function showRegisterForm() {
+            document.getElementById('register-form').classList.remove('hidden');
+        }
+        
+        function hideRegisterForm() {
+            document.getElementById('register-form').classList.add('hidden');
+        }
+        
+        // Tab switching
+        function switchTab(tab, sectionId) {
+            // Update tab styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('border-transparent', 'text-gray-600', 'dark:text-gray-400');
+            });
+            tab.classList.add('tab-active');
+            tab.classList.remove('border-transparent', 'text-gray-600', 'dark:text-gray-400');
+            
+            // Show selected section
+            document.querySelectorAll('.tab-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+        
+        // Memory session
+        function startMemorySession(type) {
+            const session = document.getElementById('memory-session');
+            const title = document.getElementById('memory-title');
+            const prompt = document.getElementById('memory-prompt');
+            const image = document.getElementById('memory-image');
+            const guidanceText = document.getElementById('guidance-text');
+            
+            session.classList.remove('hidden');
+            
+            // Set content based on memory type
+            switch(type) {
+                case 'childhood':
+                    title.textContent = '童年记忆';
+                    prompt.textContent = '回忆你童年的一个美好时刻';
+                    guidanceText.textContent = '回想童年时与家人或朋友一起玩耍的场景...感受那种无忧无虑的快乐...让自己完全沉浸在这段美好记忆中...';
+                    image.style.backgroundColor = '#C7B9FF';
+                    break;
+                case 'achievement':
+                    title.textContent = '职场成就';
+                    prompt.textContent = '回忆一次职场成功的经历';
+                    guidanceText.textContent = '回想那次成功完成项目或得到认可的时刻...感受当时的成就感和自豪...深呼吸，让这种积极情绪充满全身...';
+                    image.style.backgroundColor = '#B9DEFF';
+                    break;
+                case 'family':
+                    title.textContent = '亲情温暖';
+                    prompt.textContent = '回忆一个与家人温馨相处的时刻';
+                    guidanceText.textContent = '回想那个与家人共处的温馨时刻...感受那种被爱包围的安全感...让温暖的情绪充满心房...';
+                    image.style.backgroundColor = '#FFB9B9';
+                    break;
+                case 'travel':
+                    title.textContent = '旅行回忆';
+                    prompt.textContent = '回忆一次难忘的旅行体验';
+                    guidanceText.textContent = '回想那次美好的旅行经历...眼前的风景、空气的味道、当时的心情...让自己重新体验那种自由和放松...';
+                    image.style.backgroundColor = '#B9FFCC';
+                    break;
+            }
+            
+            // Start progress animation
+            simulateProgress('progress-bar', 'current-time', 5);
+        }
+        
+        function closeMemorySession() {
+            document.getElementById('memory-session').classList.add('hidden');
+            resetProgress('progress-bar', 'current-time');
+        }
+        
+        function completeMemorySession() {
+            closeMemorySession();
+            showPage('home-page');
+            
+            // Simulate completion notification
+            showNotification('回忆练习已完成', '+15 积分');
+        }
+        
+        // Future visualization session
+        function startFutureSession(type) {
+            const session = document.getElementById('future-session');
+            const title = document.getElementById('future-title');
+            const prompt = document.getElementById('future-prompt');
+            const image = document.getElementById('future-image');
+            const guidanceText = document.getElementById('future-guidance-text');
+            
+            session.classList.remove('hidden');
+            
+            // Set content based on future goal type
+            switch(type) {
+                case 'career':
+                    title.textContent = '职业晋升';
+                    prompt.textContent = '想象你成功获得职业晋升的场景';
+                    guidanceText.textContent = '想象自己已经成功晋升...感受被同事认可和尊重的感觉...体验那种成就感和自信...';
+                    image.style.backgroundColor = '#B9DEFF';
+                    break;
+                case 'health':
+                    title.textContent = '健康目标';
+                    prompt.textContent = '想象你达到健康目标的样子';
+                    guidanceText.textContent = '想象自己已经达到理想的健康状态...感受身体的轻盈和活力...体验那种充满能量的感觉...';
+                    image.style.backgroundColor = '#B9FFCC';
+                    break;
+                case 'relationship':
+                    title.textContent = '人际关系';
+                    prompt.textContent = '想象与他人建立和谐关系的场景';
+                    guidanceText.textContent = '想象自己拥有和谐的人际关系...与他人交流时的轻松自在...感受被理解和接纳的温暖...';
+                    image.style.backgroundColor = '#FFB9B9';
+                    break;
+                case 'personal':
+                    title.textContent = '个人成长';
+                    prompt.textContent = '想象你实现个人成长目标的样子';
+                    guidanceText.textContent = '想象自己已经达成个人成长目标...感受知识和技能提升带来的自信...体验持续进步的满足感...';
+                    image.style.backgroundColor = '#C7B9FF';
+                    break;
+                case 'custom':
+                    title.textContent = '自定义目标';
+                    prompt.textContent = '想象你实现目标的场景';
+                    guidanceText.textContent = '想象自己已经实现了设定的目标...体验那种成功的喜悦和自豪...感受达成目标后的满足感...';
+                    image.style.backgroundColor = '#FFE0B9';
+                    break;
+            }
+            
+            // Start progress animation
+            simulateProgress('future-progress-bar', 'future-current-time', 5);
+        }
+        
+        function closeFutureSession() {
+            document.getElementById('future-session').classList.add('hidden');
+            resetProgress('future-progress-bar', 'future-current-time');
+        }
+        
+        function completeFutureSession() {
+            closeFutureSession();
+            showPage('home-page');
+            
+            // Simulate completion notification
+            showNotification('未来预演已完成', '+20 积分');
+        }
+        
+        function shareFutureVision() {
+            // Simulate sharing functionality
+            showNotification('分享成功', '愿景已分享到社区');
+        }
+        
+        // Progress simulation
+        function simulateProgress(barId, timeId, minutes) {
+            const progressBar = document.getElementById(barId);
+            const timeDisplay = document.getElementById(timeId);
+            const totalSeconds = minutes * 60;
+            let elapsed = 0;
+            
+            progressBar.style.width = '0%';
+            updateTimeDisplay(timeDisplay, elapsed, totalSeconds);
+            
+            const interval = setInterval(() => {
+                elapsed += 1;
+                const progress = (elapsed / totalSeconds) * 100;
+                progressBar.style.width = `${progress}%`;
+                updateTimeDisplay(timeDisplay, elapsed, totalSeconds);
+                
+                if (elapsed >= totalSeconds) {
+                    clearInterval(interval);
+                }
+            }, 1000);
+            
+            // Store interval ID for cleanup
+            window[`${barId}_interval`] = interval;
+        }
+        
+        function resetProgress(barId, timeId) {
+            const progressBar = document.getElementById(barId);
+            const timeDisplay = document.getElementById(timeId);
+            
+            // Clear interval if it exists
+            if (window[`${barId}_interval`]) {
+                clearInterval(window[`${barId}_interval`]);
+            }
+            
+            progressBar.style.width = '0%';
+            updateTimeDisplay(timeDisplay, 0, 300); // Reset to 0/5:00
+        }
+        
+        function updateTimeDisplay(element, elapsed, total) {
+            const elapsedMin = Math.floor(elapsed / 60).toString().padStart(2, '0');
+            const elapsedSec = (elapsed % 60).toString().padStart(2, '0');
+            element.textContent = `${elapsedMin}:${elapsedSec}`;
+        }
+        
+        // Notification
+        function showNotification(title, message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-white dark:bg-dark-card rounded-lg p-4 shadow-lg z-50 animate-slide-in max-w-xs';
+            notification.innerHTML = `
+                <div class="flex items-start">
+                    <div class="flex-1">
+                        <h3 class="font-medium">${title}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">${message}</p>
+                    </div>
+                    <button class="ml-4 text-gray-500" onclick="this.parentNode.parentNode.remove()">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('opacity-0');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+        
+        // Initialize the app with welcome page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add active classes to bottom navigation
+            document.querySelector('.nav-btn').classList.add('nav-active');
+            document.querySelector('.nav-btn').classList.remove('text-gray-500', 'dark:text-gray-400');
+        });
+    </script>
+
+
+</body></html>
